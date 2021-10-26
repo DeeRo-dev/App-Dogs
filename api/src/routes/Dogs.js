@@ -31,8 +31,7 @@ router.get("/", async (req, res, next) => {
       },
       order: [["name", "ASC"]], // ordeno ascendente
     });
-  } //si no traemos toda la lista de dogs 
-  else {
+  } else {//si no traemos toda la lista de dogs 
     dogApi = await axios.get(
       `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}` //obtengo api
     );
@@ -54,14 +53,44 @@ router.get("/", async (req, res, next) => {
 // Debe traer solo los datos pedidos en la ruta de detalle de raza de perro
 // Incluir los temperamentos asociados
 router.get('/:id' , async (req , res ,next) => {
-  const parametro =  parseInt(req.params.id)
+  try{
+  const id =  req.params.id
+
+ if(typeof id === 'string' && id.length > 7){ // si entra esta en mi base de datos
+//   let apiDb =  Dog.findAll()
+
+//   apiDb.find(e => e.id === parametro)
+//   return res.send(apiDb); //{datos}
+  
+  let dog = await Dog.findByPk(id);
+  res.send(dog)
+
+ }else{ // esta en la api
   dogApi = await axios.get(
-    `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}` //obtengo api
-  );
-  console.log(dogApi.id);
-  dogFilter = dogApi.data.find(e => e.id === parametro)
-  return res.send(dogFilter); //{datos}
-  //let dog = await Dog.findByPk(idRaza);
+    `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`) //obtengo api
+  
+    // for(let i  = 0; i<dogApi.length; i++){
+
+    //   for(let j  = 0; j<dogApi[i].data.length; j++){
+        
+    //       console.log(dogApi[i].data[j]);
+    //   }
+    //   }  
+  dogFilter = await dogApi.data.find(e => e.id === parseInt(id))
+  // console.log(dogFilter)
+  return res.send({
+    temperament:dogFilter.temperament ,
+    name: dogFilter.name, 
+    height:dogFilter.height, 
+    weight:dogFilter.weight,
+    life_span:dogFilter.life_span,
+    image:dogFilter.image}); //{datos}
+    
+ }
+
+}catch(err){
+  next(err)
+}
   
 });
 
