@@ -1,0 +1,45 @@
+.flexcontainer{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  align-self: flex-end;
+  text-align: center;
+}
+.content{
+  width: 500px;
+  height: 280px;
+  background: rgba(185, 178, 169, 0.397);
+  border-radius: 6px;
+  align-self: center;
+  margin: auto;
+  border:solid #aaa 6px;
+}
+.content:hover{
+  background: rgba(182, 176, 170, 0.739);
+  transition: 0.9s;
+}
+.title{
+  color:rgb(90, 97, 73);
+  font-family: 'Inconsolata', monospace;
+  font-size: 40px;
+}
+span{
+  display: inline-block
+}
+.boton{
+   font-family: 'Akaya Telivigala', cursive;
+   color: #000 ;
+   font-size: 20px;
+   font-weight: 400;
+   padding: 0.5em 1.2em;
+   background: rgba(0,0,0,0);
+   border: 2px solid;
+   border-color: #fff;
+   transition: all 1s ease;
+   margin-top: 30px; 
+}
+.boton:hover {
+  background: #000;
+  color: #fff ;
+  cursor: pointer;
+}
